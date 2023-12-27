@@ -9,10 +9,22 @@ impl Board {
     pub fn new(state: [Space; 9]) -> Board {
         Board { state }
     }
-    pub fn check_win(&self) -> Option<Player> {
+    pub fn winner(&self) -> Option<Player> {
         self.check_rows()
             .or_else(|| self.check_columns())
             .or_else(|| self.check_diagonals())
+    }
+
+    pub fn has_winner(&self) -> bool {
+        self.winner().is_some()
+    }
+
+    pub fn o_wins(&self) -> bool {
+        self.winner() == Some(Player::O)
+    }
+
+    pub fn x_wins(&self) -> bool {
+        self.winner() == Some(Player::X)
     }
 
     fn check_rows(&self) -> Option<Player> {

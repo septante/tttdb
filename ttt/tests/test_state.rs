@@ -20,6 +20,12 @@ fn test_import_board() {
 
 #[test]
 fn test_win_check() {
-    let board1: Board = "ooo------".try_into().unwrap();
-    assert!(board1.check_win() == Some(O));
+    let board: Board = "ooo------".try_into().unwrap();
+    assert!(board.o_wins());
+    let board: Board = "-ooo-----".try_into().unwrap();
+    assert!(!board.has_winner());
+    let board: Board = "x--x--x--".try_into().unwrap();
+    assert!(board.x_wins());
+    let board: Board = "o---o---o".try_into().unwrap();
+    assert!(board.o_wins());
 }
