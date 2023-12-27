@@ -1,14 +1,17 @@
+use std::fmt;
+
 use crate::error::TTTError;
 
 #[derive(Default, PartialEq, Eq)]
 pub struct Board {
-    state: [Space; 9],
+    pub(crate) state: [Space; 9],
 }
 
 impl Board {
     pub fn new(state: [Space; 9]) -> Board {
         Board { state }
     }
+
     pub fn winner(&self) -> Option<Player> {
         self.check_rows()
             .or_else(|| self.check_columns())
@@ -148,6 +151,16 @@ impl Board {
     }
 }
 
+impl fmt::Display for Board {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{}",
+            self.state.iter().map(|s| s.to_string()).collect::<String>()
+        )
+    }
+}
+
 impl TryFrom<&str> for Board {
     type Error = TTTError;
 
@@ -172,10 +185,29 @@ impl TryFrom<&str> for Board {
     }
 }
 
-#[derive(PartialEq, Eq, Copy, Clone)]
+#[derive(Default, PartialEq, Eq, Copy, Clone)]
 pub enum Player {
+    #[default]
     O,
     X,
+}
+
+impl Player {
+    pub fn swap(&self) -> Player {
+        match self {
+            Player::O => Player::X,
+            Player::X => Player::O,
+        }
+    }
+}
+
+impl fmt::Display for Player {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Player::O => write!(f, "o"),
+            Player::X => write!(f, "x"),
+        }
+    }
 }
 
 #[derive(Default, PartialEq, Eq, Copy, Clone)]
@@ -185,6 +217,15 @@ pub enum Space {
     Filled {
         player: Player,
     },
+}
+
+impl fmt::Display for Space {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Space::Empty => write!(f, "-"),
+            Space::Filled { player } => write!(f, "{}", player),
+        }
+    }
 }
 
 impl TryFrom<char> for Player {
