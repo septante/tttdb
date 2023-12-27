@@ -255,6 +255,7 @@ impl fmt::Display for Space {
         }
     }
 }
+
 impl Space {
     fn is_empty(&self) -> bool {
         self == &Space::Empty
