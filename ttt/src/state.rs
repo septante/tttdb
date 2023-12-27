@@ -12,6 +12,13 @@ impl Board {
         Board { state }
     }
 
+    pub fn pretty_print(&self) -> String {
+        let s1 = format!("{}{}{}", self.state[0], self.state[1], self.state[2]);
+        let s2 = format!("{}{}{}", self.state[3], self.state[4], self.state[5]);
+        let s3 = format!("{}{}{}", self.state[6], self.state[7], self.state[8]);
+        [s1, s2, s3].join("\n")
+    }
+
     pub fn winner(&self) -> Option<Player> {
         self.check_rows()
             .or_else(|| self.check_columns())

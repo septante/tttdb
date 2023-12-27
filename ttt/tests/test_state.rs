@@ -49,3 +49,9 @@ fn test_win_check() {
     let board: Board = "o---o---o".try_into().unwrap();
     assert!(board.o_wins());
 }
+
+#[test]
+fn test_pretty_print() {
+    let board: Board = "oxoxoxoxo".try_into().unwrap();
+    assert!(board.pretty_print() == *"oxo\nxox\noxo");
+}
