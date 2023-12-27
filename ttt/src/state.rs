@@ -1,3 +1,6 @@
+use crate::error::TTTError;
+
+#[derive(Default)]
 pub struct Board {
     state: [Option<Player>; 9],
 }
@@ -170,8 +173,49 @@ impl Board {
     }
 }
 
+impl TryFrom<&str> for Board {
+    type Error = TTTError;
+
+    fn try_from(s: &str) -> Result<Self, TTTError> {
+        let board = Board::default();
+
+        let mut chars = s.chars();
+        while let c = chars.next() {}
+
+        Ok(board)
+    }
+}
+
 #[derive(PartialEq, Eq, Copy, Clone)]
 pub enum Player {
     O,
     X,
+}
+
+impl TryFrom<char> for Player {
+    type Error = TTTError;
+
+    fn try_from(c: char) -> Result<Self, TTTError> {
+        if c == 'O' || c == 'o' {
+            Ok(Player::O)
+        } else if c == 'X' || c == 'x' {
+            Ok(Player::X)
+        } else {
+            Err(TTTError::InputError)
+        }
+    }
+}
+
+impl TryFrom<&str> for Player {
+    type Error = TTTError;
+
+    fn try_from(s: &str) -> Result<Self, TTTError> {
+        if s == "O" || s == "o" {
+            Ok(Player::O)
+        } else if s == "X" || s == "x" {
+            Ok(Player::X)
+        } else {
+            Err(TTTError::InputError)
+        }
+    }
 }
