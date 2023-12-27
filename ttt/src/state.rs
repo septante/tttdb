@@ -1,11 +1,14 @@
 use crate::error::TTTError;
 
-#[derive(Default)]
+#[derive(Default, PartialEq, Eq)]
 pub struct Board {
     state: [Space; 9],
 }
 
 impl Board {
+    pub fn new(state: [Space; 9]) -> Board {
+        Board { state }
+    }
     pub fn check_win(&self) -> Option<Player> {
         self.check_rows()
             .or_else(|| self.check_columns())
@@ -165,11 +168,11 @@ pub enum Player {
 
 #[derive(Default, PartialEq, Eq, Copy, Clone)]
 pub enum Space {
+    #[default]
+    Empty,
     Filled {
         player: Player,
     },
-    #[default]
-    Empty,
 }
 
 impl TryFrom<char> for Player {
@@ -223,7 +226,7 @@ impl TryFrom<char> for Space {
     type Error = TTTError;
 
     fn try_from(c: char) -> Result<Self, TTTError> {
-        if c == ' ' {
+        if c == ' ' || c == '-' {
             return Ok(Self::Empty);
         }
 
