@@ -7,6 +7,12 @@ pub struct Board {
     pub(crate) state: [Space; 9],
 }
 
+impl fmt::Debug for Board {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        writeln!(f, "Board with state\n{}", self.pretty_print())
+    }
+}
+
 impl Board {
     pub fn new(state: [Space; 9]) -> Board {
         Board { state }
@@ -192,7 +198,7 @@ impl TryFrom<&str> for Board {
     }
 }
 
-#[derive(Default, PartialEq, Eq, Copy, Clone)]
+#[derive(Default, Debug, PartialEq, Eq, Copy, Clone)]
 pub enum Player {
     #[default]
     O,
@@ -245,7 +251,7 @@ impl TryFrom<&str> for Player {
     }
 }
 
-#[derive(Default, PartialEq, Eq, Copy, Clone)]
+#[derive(Default, Debug, PartialEq, Eq, Copy, Clone)]
 pub enum Space {
     #[default]
     Empty,

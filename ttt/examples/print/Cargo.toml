@@ -1,0 +1,12 @@
+[package]
+name = "ttt-print"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "ttt-print-bin"
+path = "src/bin/main.rs"
+
+[dependencies]
+ttt = { path = "../../" }

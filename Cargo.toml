@@ -4,5 +4,6 @@ resolver = "2"
 
 members = [
   "ttt",
-  "tttdb"
+  "tttdb",
+  "ttt/examples/*"
 ]
