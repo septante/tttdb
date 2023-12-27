@@ -210,24 +210,6 @@ impl fmt::Display for Player {
     }
 }
 
-#[derive(Default, PartialEq, Eq, Copy, Clone)]
-pub enum Space {
-    #[default]
-    Empty,
-    Filled {
-        player: Player,
-    },
-}
-
-impl fmt::Display for Space {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Space::Empty => write!(f, "-"),
-            Space::Filled { player } => write!(f, "{}", player),
-        }
-    }
-}
-
 impl TryFrom<char> for Player {
     type Error = TTTError;
 
@@ -256,6 +238,23 @@ impl TryFrom<&str> for Player {
     }
 }
 
+#[derive(Default, PartialEq, Eq, Copy, Clone)]
+pub enum Space {
+    #[default]
+    Empty,
+    Filled {
+        player: Player,
+    },
+}
+
+impl fmt::Display for Space {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Space::Empty => write!(f, "-"),
+            Space::Filled { player } => write!(f, "{}", player),
+        }
+    }
+}
 impl Space {
     fn is_empty(&self) -> bool {
         self == &Space::Empty
